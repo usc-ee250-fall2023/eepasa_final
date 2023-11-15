@@ -10,7 +10,7 @@ def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
     #subscribe to topics of interest here
-
+    
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
@@ -24,17 +24,23 @@ def on_press(key):
     if k == 'w':
         print("w")
         #send "w" character to rpi
+        client.publish("kackar/lcd", "w")
     elif k == 'a':
         print("a")
         # send "a" character to rpi
         #send "LED_ON"
+        client.publish("kackar/led", "LED_ON")
+        client.publish("kackar/lcd", "a")
     elif k == 's':
         print("s")
         # send "s" character to rpi
+        client.publish("kackar/lcd", "s")
     elif k == 'd':
         print("d")
         # send "d" character to rpi
         # send "LED_OFF"
+        client.publish("kackar/led", "LED_OFF")
+        client.publish("kackar/lcd", "d")
 
 if __name__ == '__main__':
     #setup the keyboard event listener
@@ -45,9 +51,9 @@ if __name__ == '__main__':
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
-    client.connect(host=, port=, keepalive=60)
+    client.connect(host="test.mosquitto.org", port=1883, keepalive=60)
     client.loop_start()
 
     while True:
-        print("delete this line")
+        
         time.sleep(1)
