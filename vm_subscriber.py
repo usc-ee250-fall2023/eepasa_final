@@ -9,24 +9,28 @@ def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
     #vm wants to receive requests from ultrasonic Ranger 
-    #and button to see what to print for distance 
-    #and whether the button is pressed
+    #and light sensor to see if someone is passing by
+    #and warning tells if someone is or isn't
     client.subscribe("pi/ultrasonicRanger")
-    client.subscribe("pi/button")
+    client.subscribe("pi/light")
+    client.subscribe("pi/warning")
     client.message_callback_add("pi/ultrasonicRanger", dist_callback)
-    client.message_callback_add("pi/button", button_callback)
+    client.message_callback_add("pi/light", light_callback)
+    client.message_callback_add("pi/warning", warning_callback)
 
-# same for button can test using part ficve commands and using dummy messages
+# custom callbacks
 def dist_callback(client, userdata, msg):
     print("dist: " + msg.payload.decode() + " cm")
-def button_callback(client, userdata, msg):
+def light_callback(client, userdata, msg):
+    print("brightness: " + msg.payload.decode())
+def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
 
 if __name__ == '__main__':
-    #this section is covered in publisher_and_subscriber_example.py
+    #set up connection
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
