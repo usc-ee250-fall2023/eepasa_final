@@ -7,14 +7,14 @@ import time
 # we are successfully `import grovepi`
 sys.path.append('../../Software/Python/')
 # This append is to support importing the LCD library.
-import grovepi
-from grove_rgb_lcd import *
+#import grovepi
+#from grove_rgb_lcd import *
 
 import paho.mqtt.client as mqtt
 import time
 
-grovepi.pinMode(2, "OUTPUT") #led port 2
-grovepi.pinMode(3, "INPUT") #light sensor port 3
+#grovepi.pinMode(2, "OUTPUT") #led port 2
+#grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -53,22 +53,29 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="test.mosquitto.org", port=1883, keepalive=60)
     client.loop_start()
-    pinMode(2, OUTPUT)
+    #pinMode(2, OUTPUT)
+    count = 100
+    count2 = 100
 
     while True:
         try:
-            dist = grovepi.ultrasonicRead(4)
-            displ = (str(dist) + "cm")
+            #dist = grovepi.ultrasonicRead(4)
+            #displ = (str(dist) + "cm")
             #rpi publishes ultrasonic Ranger data for vm
-            client.publish("pi/ultrasonicRanger", displ)
-            brightness = grovepi.analogRead(3)
+            
+            displ = str(count)
+            client.publish("kackar/ultrasonicRanger", displ)
+            count = count - 1
+            #brightness = grovepi.analogRead(3)
             #rpi publishes light sensor data for vm
-            client.publish("pi/light", brightness)
-            if (brightness < 150 or dist < 50):
+            brightness = str(count2)
+            client.publish("kackar/light", brightness)
+            count2 = count2 + 1
+            if (int(brightness) > 150 and int(displ) < 50):
                 #rpi publishes whether someone is near
-                client.publish("pi/warning", "Someone is coming!")
+                client.publish("kackar/warning", "Someone is coming!")
             else:
-                client.publish("pi/warning", "Safe")
+                client.publish("kackar/warning", "Safe")
         except IOError:
             print("error")
 

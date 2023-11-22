@@ -11,12 +11,12 @@ def on_connect(client, userdata, flags, rc):
     #vm wants to receive requests from ultrasonic Ranger 
     #and light sensor to see if someone is passing by
     #and warning tells if someone is or isn't
-    client.subscribe("pi/ultrasonicRanger")
-    client.subscribe("pi/light")
-    client.subscribe("pi/warning")
-    client.message_callback_add("pi/ultrasonicRanger", dist_callback)
-    client.message_callback_add("pi/light", light_callback)
-    client.message_callback_add("pi/warning", warning_callback)
+    client.subscribe("kackar/ultrasonicRanger")
+    client.subscribe("kackar/light")
+    client.subscribe("kackar/warning")
+    client.message_callback_add("kackar/ultrasonicRanger", dist_callback)
+    client.message_callback_add("kackarpi/light", light_callback)
+    client.message_callback_add("kackar/warning", warning_callback)
 
 # custom callbacks
 def dist_callback(client, userdata, msg):
