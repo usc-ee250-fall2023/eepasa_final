@@ -4,6 +4,7 @@ Run vm_subscriber.py in a separate terminal on your VM."""
 
 import paho.mqtt.client as mqtt
 import time
+from text import text
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -25,9 +26,12 @@ def light_callback(client, userdata, msg):
     print("brightness: " + msg.payload.decode())
 def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
+    text()
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+
+
 
 if __name__ == '__main__':
     #set up connection
