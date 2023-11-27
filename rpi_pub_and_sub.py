@@ -64,7 +64,7 @@ if __name__ == '__main__':
             brightness = grovepi.analogRead(2)
             #rpi publishes light sensor data for vm
             client.publish("pi/light", brightness)
-            if (brightness < 150 or dist < 50):
+            if (brightness < 100 or dist < 50):
                 #rpi publishes whether someone is near
                 client.publish("pi/warning", "Someone is coming!")
             else:
