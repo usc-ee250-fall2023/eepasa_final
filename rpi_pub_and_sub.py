@@ -13,8 +13,8 @@ from grove_rgb_lcd import *
 import paho.mqtt.client as mqtt
 import time
 
-#grovepi.pinMode(2, "OUTPUT") #led port 2
-#grovepi.pinMode(3, "INPUT") #light sensor port 3
+grovepi.pinMode(2, "OUTPUT") #led port 2
+grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
             displ = (str(dist) + "cm")
             #rpi publishes ultrasonic Ranger data for vm
             client.publish("pi/ultrasonicRanger", displ)
-            brightness = grovepi.analogRead(3)
+            brightness = grovepi.analogRead(2)
             #rpi publishes light sensor data for vm
             client.publish("pi/light", brightness)
             if (brightness < 150 or dist < 50):
