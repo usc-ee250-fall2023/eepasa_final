@@ -3,6 +3,7 @@
 Run rpi_pub_and_sub.py on your Raspberry Pi."""
 import sys
 import time
+from encrypt import Encrypt, Decrypt
 # By appending the folder of all the GrovePi libraries to the system path here,
 # we are successfully `import grovepi`
 sys.path.append('../../Software/Python/')
@@ -13,6 +14,8 @@ sys.path.append('../../Software/Python/')
 import paho.mqtt.client as mqtt
 import time
 
+key = b'12345678909876543212345678909876'
+iv = b'1234567890987654'
 #grovepi.pinMode(2, "OUTPUT") #led port 2
 #grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
@@ -64,18 +67,25 @@ if __name__ == '__main__':
             #rpi publishes ultrasonic Ranger data for vm
             
             displ = str(count)
-            client.publish("kackar/ultrasonicRanger", displ)
+            encrypted_message = Encrypt(displ, key, iv)
+            client.publish("kackar/ultrasonicRanger", encrypted_message)
             count = count - 1
             #brightness = grovepi.analogRead(3)
             #rpi publishes light sensor data for vm
+
             brightness = str(count2)
-            client.publish("kackar/light", brightness)
+            encrypted_message = Encrypt(brightness, key, iv)
+
+            client.publish("kackar/light", encrypted_message)
             count2 = count2 + 1
             if (int(brightness) > 150 and int(displ) < 50):
                 #rpi publishes whether someone is near
-                client.publish("kackar/warning", "Someone is coming!")
+                encrypted_message = Encrypt("Someone is coming!", key, iv)
+                client.publish("kackar/warning", encrypted_message)
             else:
-                client.publish("kackar/warning", "Safe")
+                encrypted_message = Encrypt("Safe", key, iv)
+
+                client.publish("kackar/warning", encrypted_message)
         except IOError:
             print("error")
 

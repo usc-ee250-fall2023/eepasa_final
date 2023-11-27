@@ -4,6 +4,9 @@ Run vm_subscriber.py in a separate terminal on your VM."""
 
 import paho.mqtt.client as mqtt
 import time
+from encrypt import Encrypt, Decrypt
+key = b'12345678909876543212345678909876'
+iv = b'1234567890987654'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -20,19 +23,19 @@ def on_connect(client, userdata, flags, rc):
 
 # custom callbacks
 def dist_callback(client, userdata, msg):
-    print("dist: " + msg.payload.decode() + " cm")
+    print("dist: " + Decrypt(msg.payload.decode(), key, iv) + " cm")
 def light_callback(client, userdata, msg):
-    print("brightness: " + msg.payload.decode())
+    print("brightness: " + Decrypt(msg.payload.decode(), key, iv))
 def warning_callback(client, userdata, msg):
-    print(msg.payload.decode())
+    print(Decrypt(msg.payload.decode(), key, iv))
 #Default message callback. Please use custom callbacks.
-def on_message(client, userdata, msg):
-    print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+#def on_message(client, userdata, msg):
+    #print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
 
 if __name__ == '__main__':
     #set up connection
     client = mqtt.Client()
-    client.on_message = on_message
+    #client.on_message = on_message
     client.on_connect = on_connect
     client.connect(host= "test.mosquitto.org", port=1883, keepalive=60)
     client.loop_start()
