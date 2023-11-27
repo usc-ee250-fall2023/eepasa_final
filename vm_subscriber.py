@@ -6,6 +6,8 @@ import paho.mqtt.client as mqtt
 import time
 from text import text
 
+count = 0
+
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -26,7 +28,9 @@ def light_callback(client, userdata, msg):
     print("brightness: " + msg.payload.decode())
 def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
+    print(count)
     if msg.payload.decode() == "Someone is coming!":
+        count += 1
         if count%30 == 0:
             text()
 
@@ -48,4 +52,3 @@ if __name__ == '__main__':
     while True:
        # print("delete this line")
         time.sleep(1)       
-        count += 1 
