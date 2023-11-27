@@ -6,6 +6,14 @@ import paho.mqtt.client as mqtt
 import time
 from text import text
 
+###### Decryption
+from encrypt import Encrypt, Decrypt
+
+
+key = b'12345678909876543212345678909876'
+iv = b'1234567890987654'
+######
+
 count = 0
 
 def on_connect(client, userdata, flags, rc):
@@ -22,21 +30,35 @@ def on_connect(client, userdata, flags, rc):
     client.message_callback_add("pi/warning", warning_callback)
 
 # custom callbacks
+
+#####  ALL CALLBACKS HAVE DECRYPT
+###### SHOULD DISPLAY ENCRYPTED AND DECRYPTED MSG
+
 def dist_callback(client, userdata, msg):
-    print("dist: " + msg.payload.decode() + " cm")
+
+    decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
+    encrypt_msg = msg.payload.decode()
+
+    print("dist: " + encrypt_msg + "/" + decrypt_msg + " cm")
+    
 def light_callback(client, userdata, msg):
-    print("brightness: " + msg.payload.decode())
+
+    decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
+    encrypt_msg = msg.payload.decode()
+    print("brightness: " + encrypt_msg + "/" + decrypt_msg )
+
 def warning_callback(client, userdata, msg):
-    print(msg.payload.decode())
-    print(count)
-    if msg.payload.decode() == "Someone is coming!":
+
+    decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
+    #print(msg.payload.decode())
+    #print(count)
+    if decrypt_msg == "Someone is coming!":
         text()
         time.sleep(30)
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
-
 
 
 if __name__ == '__main__':

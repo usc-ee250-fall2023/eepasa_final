@@ -13,6 +13,13 @@ from grove_rgb_lcd import *
 import paho.mqtt.client as mqtt
 import time
 
+########        ADD THIS FOR ENCRYPTION
+from encrypt import Encrypt, Decrypt
+
+key = b'12345678909876543212345678909876'
+iv = b'1234567890987654'
+###########
+
 grovepi.pinMode(2, "OUTPUT") #led port 2
 grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
@@ -59,16 +66,32 @@ if __name__ == '__main__':
         try:
             dist = grovepi.ultrasonicRead(4)
             displ = (str(dist) + "cm")
+
+            ### ENCRYPTION
+            encrypted_message = Encrypt(displ, key, iv)
             #rpi publishes ultrasonic Ranger data for vm
-            client.publish("pi/ultrasonicRanger", displ)
+            client.publish("pi/ultrasonicRanger", encrypted_message)
+            #######
+
             brightness = grovepi.analogRead(2)
+
+            #### ENCRYPTION
+            encrypted_message = Encrypt(brightness, key,iv)
             #rpi publishes light sensor data for vm
-            client.publish("pi/light", brightness)
+            client.publish("pi/light", encrypted_message)
+            ########
             if (brightness < 100 or dist < 50):
                 #rpi publishes whether someone is near
-                client.publish("pi/warning", "Someone is coming!")
+
+                ###### ENCRYPTION
+                encrypted_message = Encrypt("Someone is coming!", key,iv)
+                client.publish("pi/warning", encrypted_message)
+                ##############
             else:
-                client.publish("pi/warning", "Safe")
+                ####### ENCRYPTION
+                encrypted_message = Encrypt("Safe", key,iv)
+                client.publish("pi/warning", encrypted_message)
+                #########
         except IOError:
             print("error")
 

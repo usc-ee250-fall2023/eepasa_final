@@ -11,6 +11,13 @@ from os.path import basename
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
+##### DECRYPTION
+from encrypt import Encrypt, Decrypt
+
+key = b'12345678909876543212345678909876'
+iv = b'1234567890987654'
+###########
+
 def send_mms_via_email(
     number: str,
     message: str,

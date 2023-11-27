@@ -19,7 +19,7 @@ def make_iv():
 """
 
 key = b'12345678909876543212345678909876'
-iv = b'1234567890987654sssssssssss'
+iv = b'1234567890987654'
 
 def Encrypt(message, key, iv):
     cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=default_backend())
