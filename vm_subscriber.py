@@ -26,7 +26,7 @@ def light_callback(client, userdata, msg):
     print("brightness: " + msg.payload.decode())
 def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
-    if msg.payload.decode == "Someone is coming!":
+    if msg.payload.decode() == "Someone is coming!":
         text.text()
         time.sleep(5)
 
