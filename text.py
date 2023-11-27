@@ -68,7 +68,8 @@ def text():
     sender_credentials = ("kwalwayssmile17@gmail.com", "qurn yyxr tfgh rqdv")
 
     # MMS
-    file_path = "/Users/kendalwin/eepasa_final/shrek.png"
+    #file_path = "/Users/kendalwin/eepasa_final/shrek.png"
+    file_path = "shrek.png"
 
     mime_maintype = "image"
     mime_subtype = "png"
