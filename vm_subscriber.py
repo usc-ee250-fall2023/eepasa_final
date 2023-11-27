@@ -27,7 +27,7 @@ def light_callback(client, userdata, msg):
 def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
     if msg.payload.decode() == "Someone is coming!":
-        text.text()
+        text()
         time.sleep(5)
 
 #Default message callback. Please use custom callbacks.
