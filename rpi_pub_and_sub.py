@@ -14,7 +14,7 @@ import paho.mqtt.client as mqtt
 import time
 
 #grovepi.pinMode(2, "OUTPUT") #led port 2
-grovepi.pinMode(3, "INPUT") #light sensor port 3
+#grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
