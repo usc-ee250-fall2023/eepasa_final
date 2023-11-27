@@ -27,8 +27,8 @@ def light_callback(client, userdata, msg):
 def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
     if msg.payload.decode() == "Someone is coming!":
-        text()
-        time.sleep(5)
+        if count%30 == 0:
+            text()
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
@@ -43,7 +43,9 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host= "test.mosquitto.org", port=1883, keepalive=60)
     client.loop_start()
+    count = 0
 
     while True:
        # print("delete this line")
-        time.sleep(1)        
+        time.sleep(1)       
+        count += 1 
