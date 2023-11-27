@@ -60,7 +60,7 @@ def send_mms_via_email(
         email.sendmail(sender_email, receiver_email, text)
         
 
-def main():
+def text():
     number = "9106355304"
     message = "Someone is coming!"
     provider = "AT&T"

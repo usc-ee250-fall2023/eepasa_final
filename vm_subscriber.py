@@ -26,7 +26,10 @@ def light_callback(client, userdata, msg):
     print("brightness: " + msg.payload.decode())
 def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
-    text()
+    if msg.payload.decode == "Someone is coming!":
+        text()
+        time.sleep(5)
+
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
