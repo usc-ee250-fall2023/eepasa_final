@@ -30,9 +30,8 @@ def warning_callback(client, userdata, msg):
     print(msg.payload.decode())
     print(count)
     if msg.payload.decode() == "Someone is coming!":
-        count += 1
-        if count%30 == 0:
-            text()
+        text()
+        time.sleep(30)
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
