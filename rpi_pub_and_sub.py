@@ -14,7 +14,7 @@ import paho.mqtt.client as mqtt
 import time
 
 #grovepi.pinMode(2, "OUTPUT") #led port 2
-grovepi.pinMode(3, "INPUT") #light sensor port 3
+#grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="test.mosquitto.org", port=1883, keepalive=60)
     client.loop_start()
-    pinMode(2, OUTPUT)
+    #pinMode(2, OUTPUT)
 
     while True:
         try:
