@@ -80,19 +80,18 @@ if __name__ == '__main__':
             #rpi publishes light sensor data for vm
             client.publish("pi/light", encrypted_message)
             ########
+            
             if (brightness > 100 or dist < 50):
                 #rpi publishes whether someone is near
-
                 ###### ENCRYPTION
                 encrypted_message = Encrypt("Someone is coming!", key,iv)
-                client.publish("pi/warning", encrypted_message)
                 ##############
-            
             else:
                 ####### ENCRYPTION
                 encrypted_message = Encrypt("Safe", key,iv)
-                client.publish("pi/warning", encrypted_message)
                 #########
+            client.publish("pi/warning", encrypted_message)
+
             
         except IOError:
             print("error")
