@@ -22,6 +22,8 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 
 def Encrypt(message, key, iv):
+    message = str(message)
+
     cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=default_backend())
     encryptor = cipher.encryptor()
     ciphertext = encryptor.update(message.encode()) + encryptor.finalize()
