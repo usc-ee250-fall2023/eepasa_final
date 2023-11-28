@@ -20,8 +20,8 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 ###########
 
-grovepi.pinMode(2, "OUTPUT") #led port 2
-grovepi.pinMode(3, "INPUT") #light sensor port 3
+grovepi.pinMode(0, "INPUT") #light senspr A0 on grovepi
+#grovepi.pinMode(3, "INPUT") #light sensor port 3
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     while True:
         try:
             dist = grovepi.ultrasonicRead(4)
-            displ = (str(dist) + "cm")
+            displ = (str(dist))
 
             ### ENCRYPTION
             encrypted_message = Encrypt(displ, key, iv)
@@ -73,7 +73,7 @@ if __name__ == '__main__':
             client.publish("pi/ultrasonicRanger", encrypted_message)
             #######
 
-            brightness = grovepi.analogRead(2)
+            brightness = grovepi.analogRead(0)
 
             #### ENCRYPTION
             encrypted_message = Encrypt(brightness, key,iv)

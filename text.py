@@ -67,9 +67,9 @@ def send_mms_via_email(
         email.sendmail(sender_email, receiver_email, text)
         
 
-def text(input):
+def text():
     number = "9106355304"
-    message = input
+    message = "Someone is coming!"
     provider = "AT&T"
 
     sender_credentials = ("kwalwayssmile17@gmail.com", "qurn yyxr tfgh rqdv")

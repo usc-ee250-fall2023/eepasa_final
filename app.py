@@ -10,7 +10,18 @@ app = Flask(__name__)
 # Store the latest sensor data
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
-    
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected to server (i.e., broker) with result code "+str(rc))
+
+    #vm wants to receive requests from ultrasonic Ranger 
+    #and light sensor to see if someone is passing by
+    #and warning tells if someone is or isn't
+    client.subscribe("kackar/web_light")
+    client.subscribe("kackar/web_dist")
+    client.message_callback_add("kackar/web_light", light_callback)
+    client.message_callback_add("kackar/web_dist", dist_callback)
+
 sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
 
@@ -23,16 +34,14 @@ def dist_callback(client, userdata, msg):
 def light_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
         decrypt_msg = str(decrypt_msg)
-        sensor_data["distance"] = decrypt_msg
+        sensor_data["brightness"] = decrypt_msg
         print(f"brightness: {decrypt_msg}")
     
 # Set up the MQTT client
 client = mqtt.Client()
 client.on_message = on_message
-client.connect("test.mosquitto.org", 1883, 60)
-client.subscribe("kackar/data")
-client.subscribe("kackar/web_dist")
-client.subscribe("kackar/web_light")
+client.on_connect = on_connect
+client.connect(host= "test.mosquitto.org", port=1883, keepalive=60)
 client.loop_start()
 
 # Define the route to display sensor data
