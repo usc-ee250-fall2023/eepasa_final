@@ -10,6 +10,10 @@ app = Flask(__name__)
 # Store the latest sensor data
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+    if msg.topic == "kackar/web_dist":
+        sensor_data["distance"] = str(msg.payload, "utf-8")
+    if msg.topic == "kackar/web_light":
+        sensor_data["brightness"] = str(msg.payload, "utf-8")
     
 sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
@@ -23,7 +27,7 @@ def dist_callback(client, userdata, msg):
 def light_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
         decrypt_msg = str(decrypt_msg)
-        sensor_data["distance"] = decrypt_msg
+        sensor_data["brightness"] = decrypt_msg
         print(f"brightness: {decrypt_msg}")
     
 # Set up the MQTT client
