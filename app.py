@@ -14,7 +14,6 @@ def on_message(client, userdata, msg):
         sensor_data["distance"] = str(msg.payload, "utf-8")
     if msg.topic == "kackar/web_light":
         sensor_data["brightness"] = str(msg.payload, "utf-8")
-    render_template('index.html', sensor_data = sensor_data)
     
 sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
