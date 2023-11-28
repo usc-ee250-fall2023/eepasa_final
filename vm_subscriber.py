@@ -60,8 +60,8 @@ def warning_callback(client, userdata, msg):
 
     if decrypt_msg == "Someone is coming!":
         text(decrypt_msg)
-        time.sleep(10)
         decrypt_msg = "Pause"
+        time.sleep(10)
 """
     if decrypt_msg == "Someone is coming!":
         text(decrypt_msg)
