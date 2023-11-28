@@ -81,7 +81,7 @@ if __name__ == '__main__':
             client.publish("pi/light", encrypted_message)
             ########
             
-            if (brightness > 100 or dist < 50):
+            if (brightness < 100 or dist < 50):
                 #rpi publishes whether someone is near
                 ###### ENCRYPTION
                 encrypted_message = Encrypt("Someone is coming!", key,iv)
