@@ -55,10 +55,16 @@ def warning_callback(client, userdata, msg):
     encrypt_msg = msg.payload.decode()
     #print(msg.payload.decode())
     #print(count)
+<<<<<<< HEAD
     #if decrypt_msg == "Someone is coming!":
     smS = Decrypt(encrypt_msg, key, iv)
     text(smS)
     time.sleep(30)
+=======
+    if decrypt_msg == "Someone is coming!":
+        text(decrypt_msg)
+        time.sleep(30)
+>>>>>>> 7607d81395eb7fcbb3ab34e839359e815c512a0a
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
