@@ -16,11 +16,13 @@ sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
 def dist_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
+        decrypt_msg = str(decrypt_msg)
         sensor_data["distance"] = decrypt_msg
         print(f"dist: {decrypt_msg} cm")
 
 def light_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
+        decrypt_msg = str(decrypt_msg)
         sensor_data["distance"] = decrypt_msg
         print(f"brightness: {decrypt_msg}")
 # Set up the MQTT client
