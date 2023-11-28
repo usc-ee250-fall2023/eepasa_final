@@ -68,9 +68,9 @@ def send_mms_via_email(
         
 
 def text(input):
-    number = "9106355304"
+    number = "6692923036"
     message = input
-    provider = "AT&T"
+    provider = "Xfinity Mobile"
 
     sender_credentials = ("kwalwayssmile17@gmail.com", "qurn yyxr tfgh rqdv")
 
