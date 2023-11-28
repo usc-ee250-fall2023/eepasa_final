@@ -40,21 +40,21 @@ def dist_callback(client, userdata, msg):
     encrypt_msg = msg.payload.decode()
     client.publish("kackar/web_dist", decrypt_msg)
 
-    print(encrypt_msg)
+    print(encrypt_msg + decrypt_msg)
     
 def light_callback(client, userdata, msg):
 
     decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
     encrypt_msg = msg.payload.decode()
     client.publish("kackar/web_light", decrypt_msg)
-    print(encrypt_msg)
+    print(encrypt_msg + decrypt_msg)
 
 
 def warning_callback(client, userdata, msg):
 
     encrypt_msg = msg.payload.decode()
     smS = Decrypt(encrypt_msg, key, iv)
-    print(encrypt_msg)
+    print(encrypt_msg + decrypt_msg)
     #print(msg.payload.decode())
     #print(count)
 
