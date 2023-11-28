@@ -18,7 +18,6 @@ iv = b'1234567890987654'
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     global count
-    count = 0
     #vm wants to receive requests from ultrasonic Ranger 
     #and light sensor to see if someone is passing by
     #and warning tells if someone is or isn't
@@ -56,11 +55,12 @@ def warning_callback(client, userdata, msg):
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
 
-    if (decrypt_msg == "Someone is coming!" and count == 0):
-        count += 1
+    if (decrypt_msg == "Someone is coming!" and count%10 == 0):
         text(decrypt_msg)
     elif decrypt_msg == "Safe":
         count = 0
+    else:
+        count += 1
         
 """
     if decrypt_msg == "Someone is coming!":
