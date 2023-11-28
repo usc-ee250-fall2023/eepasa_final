@@ -38,23 +38,27 @@ def dist_callback(client, userdata, msg):
 
     decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
     encrypt_msg = msg.payload.decode()
+    client.publish("kackar/web_dist", decrypt_msg)
 
-    print("dist: " + encrypt_msg + "/" + decrypt_msg + " cm")
+    print(encrypt_msg)
     
 def light_callback(client, userdata, msg):
 
     decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
     encrypt_msg = msg.payload.decode()
-    print("brightness: " + encrypt_msg + "/" + decrypt_msg )
+    client.publish("kackar/web_light", decrypt_msg)
+    print(encrypt_msg)
+
 
 def warning_callback(client, userdata, msg):
 
-    decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
+    encrypt_msg = msg.payload.decode()
     #print(msg.payload.decode())
     #print(count)
-    if decrypt_msg == "Someone is coming!":
-        text()
-        time.sleep(30)
+    #if decrypt_msg == "Someone is coming!":
+    smS = Decrypt(encrypt_msg, key, iv)
+    text(smS)
+    time.sleep(30)
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
