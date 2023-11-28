@@ -60,6 +60,7 @@ def warning_callback(client, userdata, msg):
 
     if (decrypt_msg == "Someone is coming!" and count%10 == 0):
         text(decrypt_msg)
+        print("text sent")
     elif decrypt_msg == "Safe":
         count = 0
     else:
