@@ -14,10 +14,11 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 ######
 
+global count
+count = 0
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
-    global count
     #vm wants to receive requests from ultrasonic Ranger 
     #and light sensor to see if someone is passing by
     #and warning tells if someone is or isn't
@@ -50,8 +51,6 @@ def light_callback(client, userdata, msg):
 
 
 def warning_callback(client, userdata, msg):
-
-    global count
     
     encrypt_msg = msg.payload.decode()
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
