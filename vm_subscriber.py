@@ -15,7 +15,6 @@ iv = b'1234567890987654'
 ######
 
 global count
-count = 0
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
