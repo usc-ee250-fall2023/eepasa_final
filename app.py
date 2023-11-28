@@ -20,21 +20,17 @@ sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
 def dist_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
-        decrypt_msg = str(decrypt_msg)
-        sensor_data["distance"] = decrypt_msg
         print(f"dist: {decrypt_msg} cm")
 
 def light_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
-        decrypt_msg = str(decrypt_msg)
-        sensor_data["brightness"] = decrypt_msg
         print(f"brightness: {decrypt_msg}")
     
 # Set up the MQTT client
 client = mqtt.Client()
 client.on_message = on_message
 client.connect("test.mosquitto.org", 1883, 60)
-client.subscribe("kackar/data")
+#client.subscribe("kackar/data")
 client.subscribe("kackar/web_dist")
 client.subscribe("kackar/web_light")
 client.loop_start()
