@@ -14,7 +14,6 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 ######
 
-global count
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
