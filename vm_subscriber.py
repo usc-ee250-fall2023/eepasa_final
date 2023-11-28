@@ -13,8 +13,6 @@ from encrypt import Encrypt, Decrypt
 key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 ######
-global count
-count = 0
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -55,19 +53,8 @@ def warning_callback(client, userdata, msg):
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
 
-    """
-    if (decrypt_msg == "Someone is coming!" and count%10 == 0):
-        text(decrypt_msg)
-        print("text sent")
-    elif decrypt_msg == "Safe":
-        count = 0
-    else:
-        count += 1
-    print(count)
-    """
     if decrypt_msg == "Someone is coming!":
         text(decrypt_msg)
-        time.sleep(10)
         
 """
     if decrypt_msg == "Someone is coming!":
