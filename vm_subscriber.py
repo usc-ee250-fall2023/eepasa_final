@@ -52,6 +52,8 @@ def light_callback(client, userdata, msg):
 
 def warning_callback(client, userdata, msg):
 
+    global count
+    
     encrypt_msg = msg.payload.decode()
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
