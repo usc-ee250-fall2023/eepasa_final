@@ -60,7 +60,7 @@ def warning_callback(client, userdata, msg):
 
     if decrypt_msg == "Someone is coming!":
         text()
-        time.sleep(30)
+        time.sleep(5)
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
