@@ -14,11 +14,10 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 ######
 
-count = 0
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
-
+    count = 0
     #vm wants to receive requests from ultrasonic Ranger 
     #and light sensor to see if someone is passing by
     #and warning tells if someone is or isn't
@@ -55,8 +54,6 @@ def warning_callback(client, userdata, msg):
     encrypt_msg = msg.payload.decode()
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
-    #print(msg.payload.decode())
-    #print(count)
 
     if (decrypt_msg == "Someone is coming!" and count == 0):
         count += 1
@@ -81,7 +78,6 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host= "test.mosquitto.org", port=1883, keepalive=60)
     client.loop_start()
-    count = 0
 
     while True:
        # print("delete this line")
