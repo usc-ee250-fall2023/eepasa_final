@@ -53,13 +53,14 @@ def light_callback(client, userdata, msg):
 def warning_callback(client, userdata, msg):
 
     encrypt_msg = msg.payload.decode()
+    smS = Decrypt(encrypt_msg, key, iv)
+    print(encrypt_msg)
     #print(msg.payload.decode())
     #print(count)
 
-    #if decrypt_msg == "Someone is coming!":
-    smS = Decrypt(encrypt_msg, key, iv)
-    text(smS)
-    time.sleep(30)
+    if smS == "Someone is coming!":
+        text(smS)
+        time.sleep(30)
 """
     if decrypt_msg == "Someone is coming!":
         text(decrypt_msg)
