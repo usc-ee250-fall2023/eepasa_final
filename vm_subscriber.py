@@ -56,7 +56,6 @@ def warning_callback(client, userdata, msg):
     encrypt_msg = msg.payload.decode()
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
-    print(count)
     if (decrypt_msg == "Someone is coming!" and count%10 == 0):
         text(decrypt_msg)
         print("text sent")
@@ -64,6 +63,8 @@ def warning_callback(client, userdata, msg):
         count = 0
     else:
         count += 1
+    print(count)
+
         
 """
     if decrypt_msg == "Someone is coming!":
