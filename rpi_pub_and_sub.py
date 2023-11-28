@@ -87,13 +87,13 @@ if __name__ == '__main__':
                 encrypted_message = Encrypt("Someone is coming!", key,iv)
                 client.publish("pi/warning", encrypted_message)
                 ##############
-            """
+            
             else:
                 ####### ENCRYPTION
                 encrypted_message = Encrypt("Safe", key,iv)
                 client.publish("pi/warning", encrypted_message)
                 #########
-            """
+            
         except IOError:
             print("error")
 
