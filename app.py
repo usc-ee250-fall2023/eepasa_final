@@ -8,23 +8,26 @@ app = Flask(__name__)
 
 
 # Store the latest sensor data
+
 def on_message(client, userdata, msg):
-    print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+   # print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
     if msg.topic == "kackar/web_dist":
         sensor_data["distance"] = str(msg.payload, "utf-8")
     if msg.topic == "kackar/web_light":
         sensor_data["brightness"] = str(msg.payload, "utf-8")
-    
+ss
 sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
 
 def dist_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
-        print(f"dist: {decrypt_msg} cm")
+        #print(f"dist: {decrypt_msg} cm")
+        sensor_data["distance"] = str(msg.payload, "utf-8")
 
 def light_callback(client, userdata, msg):
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
-        print(f"brightness: {decrypt_msg}")
+        #print(f"brightness: {decrypt_msg}")
+        sensor_data["brightness"] = str(msg.payload, "utf-8")
     
 # Set up the MQTT client
 client = mqtt.Client()
@@ -32,7 +35,9 @@ client.on_message = on_message
 client.connect("test.mosquitto.org", 1883, 60)
 #client.subscribe("kackar/data")
 client.subscribe("kackar/web_dist")
+#client.message_callback_add("kackar/web_dist", dist_callback)
 client.subscribe("kackar/web_light")
+#client.message_callback_add("kackar/web_dist", light_callback)
 client.loop_start()
 
 # Define the route to display sensor data

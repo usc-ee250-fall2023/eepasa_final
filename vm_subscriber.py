@@ -52,7 +52,7 @@ def warning_callback(client, userdata, msg):
     encrypt_msg = msg.payload.decode()
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
-    print(decrypt_msg)
+    #print(decrypt_msg)
     if decrypt_msg == "Someone is coming!":
         text(decrypt_msg)
         
