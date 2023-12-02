@@ -6,25 +6,25 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 app = Flask(__name__)
 
-
 # Store the latest sensor data
 
 def on_message(client, userdata, msg):
-   # print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+   # set correct variable to data received
     if msg.topic == "kackar/web_dist":
         sensor_data["distance"] = str(msg.payload, "utf-8")
     if msg.topic == "kackar/web_light":
         sensor_data["brightness"] = str(msg.payload, "utf-8")
-ss
+
 sensor_data = {"distance": "N/A", "brightness": "N/A"}
 
-
 def dist_callback(client, userdata, msg):
+        # decrypt the data to get the distance in cm
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
         #print(f"dist: {decrypt_msg} cm")
         sensor_data["distance"] = str(msg.payload, "utf-8")
 
 def light_callback(client, userdata, msg):
+        # decrypt the data to get the brightness level
         decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
         #print(f"brightness: {decrypt_msg}")
         sensor_data["brightness"] = str(msg.payload, "utf-8")
