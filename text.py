@@ -18,6 +18,7 @@ key = b'12345678909876543212345678909876'
 iv = b'1234567890987654'
 ###########
 
+# to send the text
 def send_mms_via_email(
     number: str,
     message: str,
@@ -30,8 +31,9 @@ def send_mms_via_email(
     smtp_server: str = "smtp.gmail.com",
     smtp_port: int = 465,
 ):
-
+    # for sender (where it will say the text came from)
     sender_email, email_password = sender_credentials
+    # where the text should go
     receiver_email = f'{number}@{PROVIDERS.get(provider).get("mms")}'
 
     email_message=MIMEMultipart()
@@ -41,6 +43,7 @@ def send_mms_via_email(
 
     email_message.attach(MIMEText(message, "plain"))
 
+    # if we want to add a photo
     with open(file_path, "rb") as attachment:
         part = MIMEBase(mime_maintype, mime_subtype)
         part.set_payload(attachment.read())
@@ -55,18 +58,14 @@ def send_mms_via_email(
 
     text = email_message.as_string()
 
-    # with smtplib.SMTP_SSL(
-    #     smtp_server, smtp_port, context=ssl.create_default_context()
-    # ) as email:
-    #     email.login(sender_email, email_password)
-    #     email.sendmail(sender_email, receiver_email, text)
+    # send the text
     with smtplib.SMTP_SSL(
         smtp_server, smtp_port, context=ssl._create_unverified_context()
     ) as email:
         email.login(sender_email, email_password)
         email.sendmail(sender_email, receiver_email, text)
         
-
+# our actual information
 def text(input):
     number = "6692923036"
     message = input
@@ -74,13 +73,12 @@ def text(input):
 
     sender_credentials = ("kwalwayssmile17@gmail.com", "qurn yyxr tfgh rqdv")
 
-    # MMS
-    #file_path = "/Users/kendalwin/eepasa_final/shrek.png"
+    # MMS aka the image we want to use
     file_path = "shrek.png"
-
     mime_maintype = "image"
     mime_subtype = "png"
 
+    # calling the send function
     send_mms_via_email(
         number,
         message,
