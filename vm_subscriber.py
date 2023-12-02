@@ -1,7 +1,3 @@
-"""EE 250L Lab 04 Starter Code
-
-Run vm_subscriber.py in a separate terminal on your VM."""
-
 import paho.mqtt.client as mqtt
 import time
 from text import text
@@ -32,39 +28,33 @@ def on_connect(client, userdata, flags, rc):
 ###### SHOULD DISPLAY ENCRYPTED AND DECRYPTED MSG
 
 def dist_callback(client, userdata, msg):
-
+    # create the encrypted and decrypted messages
     decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
     encrypt_msg = msg.payload.decode()
+    # send the decrypted message to be printed on the website
     client.publish("kackar/web_dist", decrypt_msg)
-
     print(encrypt_msg)
     
 def light_callback(client, userdata, msg):
-
+    # create the encrypted and decrypted messages
     decrypt_msg = Decrypt(msg.payload.decode(), key, iv)
     encrypt_msg = msg.payload.decode()
+    # send the decrypted message to be printed on the website
     client.publish("kackar/web_light", decrypt_msg)
     print(encrypt_msg)
 
-
 def warning_callback(client, userdata, msg):
-    
+    # create the encrypted and decrypted messages
     encrypt_msg = msg.payload.decode()
     decrypt_msg = Decrypt(encrypt_msg, key, iv)
     print(encrypt_msg)
-    #print(decrypt_msg)
+    # send a text if warning goes off
     if decrypt_msg == "Someone is coming!":
         text(decrypt_msg)
         
-"""
-    if decrypt_msg == "Someone is coming!":
-        text(decrypt_msg)
-        time.sleep(30)
-"""
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
-
 
 if __name__ == '__main__':
     #set up connection
@@ -75,5 +65,4 @@ if __name__ == '__main__':
     client.loop_start()
 
     while True:
-       # print("delete this line")
         time.sleep(1)       
